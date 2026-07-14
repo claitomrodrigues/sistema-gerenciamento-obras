@@ -32,6 +32,10 @@ public class RelatorioEmpenhos {
         tabela.addCell(PdfUtils.th("Saldo"));
         tabela.addCell(PdfUtils.th("Data"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 7));
+        }
+
         for (Empenho e : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(e.getId())));
             tabela.addCell(PdfUtils.tdCenter(e.getNumero()));

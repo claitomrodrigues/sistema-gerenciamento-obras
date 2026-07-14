@@ -28,6 +28,10 @@ public class RelatorioOcorrencias {
         tabela.addCell(PdfUtils.th("Status"));
         tabela.addCell(PdfUtils.th("Data"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 5));
+        }
+
         for (Ocorrencia o : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(o.getId())));
             tabela.addCell(PdfUtils.td(o.getEquipamento() == null ? "" : o.getEquipamento().getNome()));

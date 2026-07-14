@@ -1,11 +1,18 @@
 package util;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Window;
+import java.awt.Dialog;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
+import ui.components.Notifications;
+import ui.theme.Theme;
 
 public class FormUtils {
     public static double parseDouble(String valor, String campo) {
@@ -49,15 +56,36 @@ public class FormUtils {
         return Integer.parseInt(tabela.getModel().getValueAt(modelRow, 0).toString());
     }
 
-    public static void info(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Informação", JOptionPane.INFORMATION_MESSAGE);
-    }
+    public static void info(String msg) { Notifications.info(null, msg); }
+    public static void erro(Exception e) { Notifications.error(null, e.getMessage() == null ? "Erro inesperado." : e.getMessage()); }
 
-    public static void erro(Exception e) {
-        JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-    }
+    public static boolean confirmar(String msg) { return confirmar(null, msg); }
 
-    public static boolean confirmar(String msg) {
-        return JOptionPane.showConfirmDialog(null, msg, "Confirmar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    public static boolean confirmar(Component parent, String msg) {
+        final boolean[] resposta = {false};
+        Window owner = parent == null ? null : SwingUtilities.getWindowAncestor(parent);
+        JDialog dialog = new JDialog(owner, "Confirmação", Dialog.ModalityType.APPLICATION_MODAL);
+        JPanel raiz = new JPanel(new BorderLayout(12, 12));
+        raiz.setBackground(Theme.CARD);
+        raiz.setBorder(new EmptyBorder(18, 20, 16, 20));
+        JLabel texto = new JLabel("<html><b>Confirmação</b><br>" + msg + "</html>");
+        texto.setFont(Theme.FONT);
+        texto.setForeground(Theme.TEXT);
+        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+        botoes.setOpaque(false);
+        JButton nao = new JButton("Cancelar");
+        JButton sim = new JButton("Confirmar");
+        sim.setBackground(Theme.DANGER);
+        sim.setForeground(java.awt.Color.WHITE);
+        nao.addActionListener(e -> dialog.dispose());
+        sim.addActionListener(e -> { resposta[0] = true; dialog.dispose(); });
+        botoes.add(nao); botoes.add(sim);
+        raiz.add(texto, BorderLayout.CENTER);
+        raiz.add(botoes, BorderLayout.SOUTH);
+        dialog.setContentPane(raiz);
+        dialog.pack();
+        dialog.setLocationRelativeTo(parent);
+        dialog.setVisible(true);
+        return resposta[0];
     }
 }

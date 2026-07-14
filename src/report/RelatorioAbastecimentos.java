@@ -29,6 +29,10 @@ public class RelatorioAbastecimentos {
         tabela.addCell(PdfUtils.th("Litros"));
         tabela.addCell(PdfUtils.th("Data"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 5));
+        }
+
         for (Abastecimento a : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(a.getId())));
             tabela.addCell(PdfUtils.td(a.getEquipamento() == null ? "" : a.getEquipamento().getNome()));

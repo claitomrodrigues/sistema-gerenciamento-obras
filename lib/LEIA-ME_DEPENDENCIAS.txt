@@ -1,0 +1,8 @@
+Coloque nesta pasta os JARs usados pelo sistema antes de gerar o executável:
+
+- sqlite-jdbc-3.53.2.0.jar
+- flatlaf-3.4.1.jar
+- jcalendar-1.4.jar
+- openpdf-1.3.30.jar
+
+No Eclipse, ajuste o Build Path para apontar para esta pasta lib/ em vez da pasta Downloads.

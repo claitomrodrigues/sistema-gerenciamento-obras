@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -42,7 +43,15 @@ public class PdfUtils {
     }
 
     public static String caminhoArquivo(String prefixo) {
-        String nome = prefixo + "_" + System.currentTimeMillis() + ".pdf";
+        String base = nvl(prefixo).trim().toLowerCase(Locale.ROOT)
+                .replaceAll("[^a-z0-9_-]+", "_")
+                .replaceAll("_+", "_")
+                .replaceAll("^_|_$", "");
+        if (base.isBlank()) base = "relatorio";
+
+        String dataHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String identificador = UUID.randomUUID().toString().substring(0, 6);
+        String nome = base + "_" + dataHora + "_" + identificador + ".pdf";
         return new File(ReportConfig.getPastaRelatorios(), nome).getAbsolutePath();
     }
 
@@ -126,6 +135,16 @@ public class PdfUtils {
     public static PdfPCell tdRight(String texto) {
         PdfPCell cell = td(texto);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        return cell;
+    }
+
+    public static PdfPCell vazio(String mensagem, int colunas) {
+        PdfPCell cell = td(nvl(mensagem).isBlank() ? "Nenhum registro encontrado." : mensagem);
+        cell.setColspan(Math.max(1, colunas));
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setPaddingTop(10f);
+        cell.setPaddingBottom(10f);
+        cell.setBackgroundColor(PRIMARY_LIGHT);
         return cell;
     }
 

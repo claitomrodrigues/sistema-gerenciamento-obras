@@ -35,7 +35,7 @@ public class EquipamentoDialog extends JDialog {
         StyleUtils.addField(panel, 5, "Status:", chkAtivo);
         btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
-        add(panel, java.awt.BorderLayout.CENTER);
+        add(StyleUtils.contentScroll(panel), java.awt.BorderLayout.CENTER);
         add(StyleUtils.dialogButtons(btnSalvar, btnCancelar), java.awt.BorderLayout.SOUTH);
     }
 

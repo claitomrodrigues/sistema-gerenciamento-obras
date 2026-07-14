@@ -38,6 +38,10 @@ public class RelatorioEquipamentos {
         tabela.addCell(PdfUtils.th("KM"));
         tabela.addCell(PdfUtils.th("Status"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 6));
+        }
+
         for (Equipamento e : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(e.getId())));
             tabela.addCell(PdfUtils.td(e.getNome()));

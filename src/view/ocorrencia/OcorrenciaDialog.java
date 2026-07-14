@@ -32,7 +32,7 @@ public class OcorrenciaDialog extends JDialog {
         StyleUtils.addField(panel, 3, "Status:", cbStatus);
         btnSalvar = new JButton("Salvar");
         btnCancelar = new JButton("Cancelar");
-        add(panel, java.awt.BorderLayout.CENTER);
+        add(StyleUtils.contentScroll(panel), java.awt.BorderLayout.CENTER);
         add(StyleUtils.dialogButtons(btnSalvar, btnCancelar), java.awt.BorderLayout.SOUTH);
     }
 

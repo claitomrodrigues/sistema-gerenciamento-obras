@@ -31,6 +31,10 @@ public class RelatorioLicitacoes {
         tabela.addCell(PdfUtils.th("Valor"));
         tabela.addCell(PdfUtils.th("Data"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 7));
+        }
+
         for (Licitacao l : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(l.getId())));
             tabela.addCell(PdfUtils.tdCenter(l.getNumero()));

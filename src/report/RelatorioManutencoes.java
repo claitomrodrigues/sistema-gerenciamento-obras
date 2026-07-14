@@ -29,6 +29,10 @@ public class RelatorioManutencoes {
         tabela.addCell(PdfUtils.th("Próxima"));
         tabela.addCell(PdfUtils.th("Data"));
 
+        if (lista == null || lista.isEmpty()) {
+            tabela.addCell(PdfUtils.vazio("Nenhum registro encontrado para os filtros informados.", 6));
+        }
+
         for (Manutencao m : lista) {
             tabela.addCell(PdfUtils.tdCenter(String.valueOf(m.getId())));
             tabela.addCell(PdfUtils.td(m.getEquipamento() == null ? "" : m.getEquipamento().getNome()));

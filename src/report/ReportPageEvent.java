@@ -64,7 +64,9 @@ public class ReportPageEvent extends PdfPageEventHelper {
         p.add(new Phrase(cfg.getEstado() + "\n", PdfUtils.FONT_BOLD));
         p.add(new Phrase(cfg.getPrefeitura() + "\n", PdfUtils.FONT_BOLD));
         p.add(new Phrase(cfg.getSecretaria() + "\n", PdfUtils.FONT_BOLD));
-        p.add(new Phrase(PdfUtils.nvl(cfg.getEndereco()), PdfUtils.FONT_SMALL));
+        String identificacao = PdfUtils.nvl(cfg.getEndereco());
+        if (!cfg.getCnpj().isBlank()) identificacao += " | CNPJ: " + cfg.getCnpj();
+        p.add(new Phrase(identificacao, PdfUtils.FONT_SMALL));
         textCell.addElement(p);
 
         PdfPCell codCell = new PdfPCell();
@@ -105,7 +107,9 @@ public class ReportPageEvent extends PdfPageEventHelper {
         cb.restoreState();
 
         Phrase footerLeft = new Phrase(cfg.getPrefeitura() + " | " + cfg.getSecretaria(), PdfUtils.FONT_SMALL);
-        Phrase footerCenter = new Phrase("São Vicente do Sul - RS - Brasil", PdfUtils.FONT_SMALL);
+        String centro = cfg.getCidade();
+        if (!cfg.getContatoInstitucional().isBlank()) centro += " | " + cfg.getContatoInstitucional();
+        Phrase footerCenter = new Phrase(centro, PdfUtils.FONT_SMALL);
         Phrase footerRight = new Phrase("Página " + writer.getPageNumber(), PdfUtils.FONT_SMALL);
 
         ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, footerLeft, document.leftMargin(), 29, 0);

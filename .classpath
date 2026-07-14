@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Claitom/Downloads/sqlite-jdbc-3.53.2.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Claitom/Downloads/flatlaf-3.4.1.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Claitom/Downloads/jcalendar-1.4.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Claitom/Downloads/openpdf-1.3.30.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="output" path="bin"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+        <attributes>
+            <attribute name="module" value="true"/>
+        </attributes>
+    </classpathentry>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/sqlite-jdbc-3.53.2.0.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/flatlaf-3.4.1.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/jcalendar-1.4.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/openpdf-1.3.30.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/commons-math3-3.6.1.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/log4j-api-2.0.2.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/commons-collections4-4.5.0.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/commons-io-2.20.0.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/commons-compress-1.28.0.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/xmlbeans-5.3.0.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/poi-ooxml-lite-5.5.1.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/poi-ooxml-5.5.1.jar"/>
+    <classpathentry kind="lib" path="C:/Users/Claitom/Downloads/poi-5.5.1.jar"/>
+    <classpathentry kind="output" path="bin"/>
 </classpath>
