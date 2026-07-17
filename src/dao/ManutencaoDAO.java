@@ -4,7 +4,10 @@ import connection.ConnectionFactory;
 import model.Equipamento;
 import model.Manutencao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,9 @@ import java.util.List;
 public class ManutencaoDAO extends DAOBase {
 
     public void salvar(Manutencao m) {
-        String sql = "INSERT INTO manutencao (equipamento_id, descricao, revisaoAtual, proximaRevisao, data) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO manutencao "
+                + "(equipamento_id, descricao, revisaoAtual, proximaRevisao, valor, data) "
+                + "VALUES (?,?,?,?,?,?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -31,7 +36,8 @@ public class ManutencaoDAO extends DAOBase {
     }
 
     public List<Manutencao> listarPorPeriodo(LocalDate inicio, LocalDate fim) {
-        String sql = baseSelect() + " WHERE date(m.data) BETWEEN date(?) AND date(?) ORDER BY m.data DESC, m.id DESC";
+        String sql = baseSelect()
+                + " WHERE date(m.data) BETWEEN date(?) AND date(?) ORDER BY m.data DESC, m.id DESC";
         return consultarLista(sql, inicio, fim);
     }
 
@@ -52,7 +58,8 @@ public class ManutencaoDAO extends DAOBase {
     }
 
     public void atualizar(Manutencao m) {
-        String sql = "UPDATE manutencao SET equipamento_id=?, descricao=?, revisaoAtual=?, proximaRevisao=?, data=? WHERE id=?";
+        String sql = "UPDATE manutencao SET equipamento_id=?, descricao=?, revisaoAtual=?, "
+                + "proximaRevisao=?, valor=?, data=? WHERE id=?";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -87,6 +94,7 @@ public class ManutencaoDAO extends DAOBase {
                 m.descricao,
                 m.revisaoAtual,
                 m.proximaRevisao,
+                m.valor,
                 m.data,
                 e.nome AS equipamento_nome
             FROM manutencao m
@@ -120,6 +128,7 @@ public class ManutencaoDAO extends DAOBase {
         m.setDescricao(rs.getString("descricao"));
         m.setRevisaoAtual(rs.getDouble("revisaoAtual"));
         m.setProximaRevisao(rs.getDouble("proximaRevisao"));
+        m.setValor(rs.getDouble("valor"));
         m.setData(getLocalDate(rs, "data"));
 
         Equipamento equipamento = new Equipamento();
@@ -135,10 +144,11 @@ public class ManutencaoDAO extends DAOBase {
         stmt.setString(2, m.getDescricao());
         stmt.setDouble(3, m.getRevisaoAtual());
         stmt.setDouble(4, m.getProximaRevisao());
-        setLocalDate(stmt, 5, m.getData());
+        stmt.setDouble(5, m.getValor());
+        setLocalDate(stmt, 6, m.getData());
 
         if (incluirId) {
-            stmt.setInt(6, m.getId());
+            stmt.setInt(7, m.getId());
         }
     }
 }

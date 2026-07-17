@@ -56,7 +56,7 @@ public final class ExcelImportUtils {
             ManutencaoController controller = new ManutencaoController(); EquipamentoController eqCtrl = new EquipamentoController(); int importados = 0;
             for (String[] l : linhas) { if (l.length < 2 || pareceCabecalho(l[0])) continue;
                 Equipamento eq = eqCtrl.buscarPorId(inteiro(valor(l,0))); if (eq == null) continue;
-                Manutencao m = new Manutencao(); m.setEquipamento(eq); m.setDescricao(valor(l,1)); m.setRevisaoAtual(numero(valor(l,2))); m.setProximaRevisao(numero(valor(l,3))); m.setData(data(valor(l,4)));
+                Manutencao m = new Manutencao(); m.setEquipamento(eq); m.setDescricao(valor(l,1)); m.setRevisaoAtual(numero(valor(l,2))); m.setProximaRevisao(numero(valor(l,3))); m.setData(data(valor(l,4))); m.setValor(numero(valor(l,5)));
                 controller.salvar(m); importados++;
             } return importados;
         });

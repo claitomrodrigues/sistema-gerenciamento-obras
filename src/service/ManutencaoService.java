@@ -80,6 +80,9 @@ public class ManutencaoService {
         if (manutencao.getProximaRevisao() < 0) {
             throw new IllegalArgumentException("Próxima revisão não pode ser negativa.");
         }
+        if (manutencao.getValor() < 0) {
+            throw new IllegalArgumentException("Valor da manutenção não pode ser negativo.");
+        }
     }
 
     private void validarPeriodo(LocalDate inicio, LocalDate fim) {

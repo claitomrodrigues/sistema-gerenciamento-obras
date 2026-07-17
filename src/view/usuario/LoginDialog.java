@@ -18,7 +18,7 @@ public class LoginDialog extends JDialog {
     private final JTextField txtLogin = new JTextField(22);
     private final JPasswordField txtSenha = new JPasswordField(22);
     private final JCheckBox chkMostrarSenha = new JCheckBox("Mostrar senha");
-    private final JButton btnEntrar = new JButton("Entrar no sistema");
+    private final JButton btnEntrar = new JButton("Entrar");
     private final JButton btnSair = new JButton("Fechar");
     private char caractereSenha;
 
@@ -27,7 +27,6 @@ public class LoginDialog extends JDialog {
         setModal(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        setUndecorated(false);
         montar();
         pack();
         setLocationRelativeTo(null);
@@ -37,7 +36,7 @@ public class LoginDialog extends JDialog {
     private void montar() {
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(Theme.BACKGROUND);
-        root.setPreferredSize(new Dimension(920, 550));
+        root.setPreferredSize(new Dimension(920, 560));
         root.add(criarPainelInstitucional(), BorderLayout.WEST);
         root.add(criarAreaLogin(), BorderLayout.CENTER);
         setContentPane(root);
@@ -57,63 +56,60 @@ public class LoginDialog extends JDialog {
 
     private JComponent criarPainelInstitucional() {
         GradientPanel painel = new GradientPanel();
-        painel.setPreferredSize(new Dimension(390, 550));
+        painel.setPreferredSize(new Dimension(370, 560));
         painel.setLayout(new BorderLayout());
-        painel.setBorder(new EmptyBorder(42, 40, 34, 40));
+        painel.setBorder(new EmptyBorder(44, 42, 34, 42));
 
-        JPanel topo = new JPanel();
-        topo.setOpaque(false);
-        topo.setLayout(new BoxLayout(topo, BoxLayout.Y_AXIS));
+        JPanel conteudo = new JPanel();
+        conteudo.setOpaque(false);
+        conteudo.setLayout(new BoxLayout(conteudo, BoxLayout.Y_AXIS));
 
         JLabel logo = criarLogo();
         logo.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel produto = new JLabel("Obras & Frota");
-        produto.setAlignmentX(Component.LEFT_ALIGNMENT);
-        produto.setForeground(Color.WHITE);
-        produto.setFont(new Font("Segoe UI", Font.BOLD, 32));
 
         JLabel categoria = new JLabel("GESTÃO MUNICIPAL");
         categoria.setAlignmentX(Component.LEFT_ALIGNMENT);
         categoria.setForeground(new Color(191, 219, 254));
         categoria.setFont(new Font("Segoe UI", Font.BOLD, 12));
 
-        JTextArea descricao = new JTextArea(
-                "Controle operacional da Secretaria de Obras em um ambiente seguro, organizado e fácil de usar."
-        );
-        descricao.setAlignmentX(Component.LEFT_ALIGNMENT);
-        descricao.setOpaque(false);
-        descricao.setEditable(false);
-        descricao.setFocusable(false);
-        descricao.setLineWrap(true);
-        descricao.setWrapStyleWord(true);
-        descricao.setForeground(new Color(226, 232, 240));
-        descricao.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        descricao.setMaximumSize(new Dimension(300, 86));
+        JLabel produto = new JLabel("Obras & Frota");
+        produto.setAlignmentX(Component.LEFT_ALIGNMENT);
+        produto.setForeground(Color.WHITE);
+        produto.setFont(new Font("Segoe UI", Font.BOLD, 32));
 
-        topo.add(logo);
-        topo.add(Box.createVerticalStrut(24));
-        topo.add(categoria);
-        topo.add(Box.createVerticalStrut(7));
-        topo.add(produto);
-        topo.add(Box.createVerticalStrut(22));
-        topo.add(descricao);
+        JSeparator separador = new JSeparator();
+        separador.setAlignmentX(Component.LEFT_ALIGNMENT);
+        separador.setForeground(new Color(255, 255, 255, 42));
+        separador.setBackground(new Color(255, 255, 255, 42));
+        separador.setMaximumSize(new Dimension(250, 1));
 
-        JPanel recursos = new JPanel();
-        recursos.setOpaque(false);
-        recursos.setLayout(new BoxLayout(recursos, BoxLayout.Y_AXIS));
-        recursos.add(criarRecurso("Controle centralizado", "Frota, combustível, manutenção e serviços."));
-        recursos.add(Box.createVerticalStrut(18));
-        recursos.add(criarRecurso("Informação gerencial", "Indicadores, alertas e relatórios em PDF."));
-        recursos.add(Box.createVerticalStrut(18));
-        recursos.add(criarRecurso("Segurança operacional", "Usuários, permissões, auditoria e backup."));
+        JLabel secretaria = new JLabel("Secretaria Municipal de Obras");
+        secretaria.setAlignmentX(Component.LEFT_ALIGNMENT);
+        secretaria.setForeground(new Color(226, 232, 240));
+        secretaria.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
-        JLabel rodape = new JLabel("Secretaria Municipal de Obras");
+        JLabel local = new JLabel("São Vicente do Sul - RS");
+        local.setAlignmentX(Component.LEFT_ALIGNMENT);
+        local.setForeground(new Color(148, 163, 184));
+        local.setFont(Theme.SMALL);
+
+        conteudo.add(logo);
+        conteudo.add(Box.createVerticalStrut(28));
+        conteudo.add(categoria);
+        conteudo.add(Box.createVerticalStrut(8));
+        conteudo.add(produto);
+        conteudo.add(Box.createVerticalStrut(25));
+        conteudo.add(separador);
+        conteudo.add(Box.createVerticalStrut(22));
+        conteudo.add(secretaria);
+        conteudo.add(Box.createVerticalStrut(6));
+        conteudo.add(local);
+
+        JLabel rodape = new JLabel("Acesso institucional");
         rodape.setForeground(new Color(148, 163, 184));
         rodape.setFont(Theme.SMALL);
 
-        painel.add(topo, BorderLayout.NORTH);
-        painel.add(recursos, BorderLayout.CENTER);
+        painel.add(conteudo, BorderLayout.NORTH);
         painel.add(rodape, BorderLayout.SOUTH);
         return painel;
     }
@@ -122,9 +118,10 @@ public class LoginDialog extends JDialog {
         URL recurso = LoginDialog.class.getResource("/img/logo.png");
         if (recurso != null) {
             ImageIcon original = new ImageIcon(recurso);
-            Image imagem = original.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+            Image imagem = original.getImage().getScaledInstance(72, 72, Image.SCALE_SMOOTH);
             JLabel label = new JLabel(new ImageIcon(imagem));
-            label.setPreferredSize(new Dimension(70, 70));
+            label.setPreferredSize(new Dimension(78, 78));
+            label.setMaximumSize(new Dimension(78, 78));
             return label;
         }
 
@@ -133,67 +130,31 @@ public class LoginDialog extends JDialog {
         fallback.setBackground(new Color(255, 255, 255, 28));
         fallback.setForeground(Color.WHITE);
         fallback.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        fallback.setPreferredSize(new Dimension(64, 64));
-        fallback.setMaximumSize(new Dimension(64, 64));
+        fallback.setPreferredSize(new Dimension(72, 72));
+        fallback.setMaximumSize(new Dimension(72, 72));
         return fallback;
-    }
-
-    private JComponent criarRecurso(String titulo, String texto) {
-        JPanel item = new JPanel(new BorderLayout(14, 0));
-        item.setOpaque(false);
-        item.setAlignmentX(Component.LEFT_ALIGNMENT);
-        item.setMaximumSize(new Dimension(310, 58));
-
-        JLabel indicador = new JLabel("OK", SwingConstants.CENTER);
-        indicador.setOpaque(true);
-        indicador.setBackground(new Color(255, 255, 255, 24));
-        indicador.setForeground(new Color(191, 219, 254));
-        indicador.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        indicador.setPreferredSize(new Dimension(36, 36));
-
-        JPanel textos = new JPanel();
-        textos.setOpaque(false);
-        textos.setLayout(new BoxLayout(textos, BoxLayout.Y_AXIS));
-        JLabel lblTitulo = new JLabel(titulo);
-        lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        JLabel lblTexto = new JLabel(texto);
-        lblTexto.setForeground(new Color(203, 213, 225));
-        lblTexto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        textos.add(lblTitulo);
-        textos.add(Box.createVerticalStrut(3));
-        textos.add(lblTexto);
-
-        item.add(indicador, BorderLayout.WEST);
-        item.add(textos, BorderLayout.CENTER);
-        return item;
     }
 
     private JComponent criarAreaLogin() {
         JPanel area = new JPanel(new GridBagLayout());
         area.setBackground(Theme.BACKGROUND);
-        area.setBorder(new EmptyBorder(34, 48, 34, 48));
+        area.setBorder(new EmptyBorder(28, 48, 28, 48));
 
         RoundedCard card = new RoundedCard();
         card.setLayout(new BorderLayout());
-        card.setPreferredSize(new Dimension(420, 460));
-        card.setBorder(new EmptyBorder(40, 42, 30, 42));
+        card.setPreferredSize(new Dimension(420, 490));
+        card.setBorder(new EmptyBorder(38, 42, 34, 42));
 
         JPanel form = new JPanel();
         form.setOpaque(false);
         form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
 
-        JLabel selo = new JLabel("ACESSO SEGURO");
-        selo.setForeground(Theme.PRIMARY);
-        selo.setFont(new Font("Segoe UI", Font.BOLD, 11));
-        selo.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel titulo = new JLabel("Bem-vindo de volta");
+        JLabel titulo = new JLabel("Acesse sua conta");
         titulo.setForeground(Theme.TEXT);
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel subtitulo = new JLabel("Informe suas credenciais para continuar.");
+        JLabel subtitulo = new JLabel("Informe seu usuário e sua senha para continuar.");
         subtitulo.setForeground(Theme.MUTED);
         subtitulo.setFont(Theme.FONT);
         subtitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -211,19 +172,19 @@ public class LoginDialog extends JDialog {
         chkMostrarSenha.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         StyleUtils.styleToolbarButton(btnEntrar);
-        btnEntrar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
-        btnEntrar.setPreferredSize(new Dimension(320, 46));
+        btnEntrar.setMinimumSize(new Dimension(320, 48));
+        btnEntrar.setPreferredSize(new Dimension(320, 48));
+        btnEntrar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
         btnEntrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         StyleUtils.styleSecondaryButton(btnSair);
-        btnSair.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        btnSair.setMinimumSize(new Dimension(320, 44));
         btnSair.setPreferredSize(new Dimension(320, 44));
+        btnSair.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
         btnSair.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        form.add(selo);
-        form.add(Box.createVerticalStrut(8));
         form.add(titulo);
-        form.add(Box.createVerticalStrut(7));
+        form.add(Box.createVerticalStrut(8));
         form.add(subtitulo);
         form.add(Box.createVerticalStrut(30));
         form.add(loginLabel);
@@ -233,29 +194,23 @@ public class LoginDialog extends JDialog {
         form.add(senhaLabel);
         form.add(Box.createVerticalStrut(7));
         form.add(txtSenha);
-        form.add(Box.createVerticalStrut(9));
-        form.add(chkMostrarSenha);
-        form.add(Box.createVerticalStrut(24));
-        form.add(btnEntrar);
         form.add(Box.createVerticalStrut(10));
+        form.add(chkMostrarSenha);
+        form.add(Box.createVerticalStrut(25));
+        form.add(btnEntrar);
+        form.add(Box.createVerticalStrut(11));
         form.add(btnSair);
 
-        JLabel suporte = new JLabel("Sistema de uso interno - Acesso restrito");
-        suporte.setForeground(new Color(148, 163, 184));
-        suporte.setFont(Theme.SMALL);
-        suporte.setHorizontalAlignment(SwingConstants.CENTER);
-        suporte.setBorder(new EmptyBorder(18, 0, 0, 0));
-
         card.add(form, BorderLayout.CENTER);
-        card.add(suporte, BorderLayout.SOUTH);
         area.add(card);
         return area;
     }
 
     private void configurarCampo(JTextField campo, String nomeAcessivel) {
         StyleUtils.prepareInput(campo);
-        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        campo.setMinimumSize(new Dimension(320, 44));
         campo.setPreferredSize(new Dimension(320, 44));
+        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
         campo.setAlignmentX(Component.LEFT_ALIGNMENT);
         campo.getAccessibleContext().setAccessibleName(nomeAcessivel);
     }
@@ -279,13 +234,16 @@ public class LoginDialog extends JDialog {
 
         if (login.isBlank() || senha.isBlank()) {
             Notifications.warning(this, "Informe o usuário e a senha.");
-            if (login.isBlank()) txtLogin.requestFocusInWindow();
-            else txtSenha.requestFocusInWindow();
+            if (login.isBlank()) {
+                txtLogin.requestFocusInWindow();
+            } else {
+                txtSenha.requestFocusInWindow();
+            }
             return;
         }
 
         btnEntrar.setEnabled(false);
-        btnEntrar.setText("Validando acesso...");
+        btnEntrar.setText("Validando...");
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         try {
@@ -300,7 +258,7 @@ public class LoginDialog extends JDialog {
         } finally {
             setCursor(Cursor.getDefaultCursor());
             btnEntrar.setEnabled(true);
-            btnEntrar.setText("Entrar no sistema");
+            btnEntrar.setText("Entrar");
         }
     }
 
@@ -321,8 +279,8 @@ public class LoginDialog extends JDialog {
             g2.fillRect(0, 0, getWidth(), getHeight());
 
             g2.setColor(new Color(255, 255, 255, 10));
-            g2.fillOval(getWidth() - 180, -80, 260, 260);
-            g2.fillOval(-120, getHeight() - 130, 250, 250);
+            g2.fillOval(getWidth() - 170, -80, 250, 250);
+            g2.fillOval(-125, getHeight() - 135, 255, 255);
             g2.dispose();
         }
     }

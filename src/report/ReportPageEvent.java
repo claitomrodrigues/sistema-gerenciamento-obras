@@ -22,7 +22,6 @@ public class ReportPageEvent extends PdfPageEventHelper {
             Rectangle page = document.getPageSize();
             PrefeituraConfig cfg = ReportConfig.getPrefeitura();
 
-            desenharMarcaDagua(writer, page, cfg);
             desenharCabecalho(writer, document, page, cfg);
             desenharRodape(writer, document, page, cfg);
         } catch (Exception e) {
@@ -45,7 +44,8 @@ public class ReportPageEvent extends PdfPageEventHelper {
 
         Image logo = carregarLogo(cfg);
         if (logo != null) {
-            logo.scaleToFit(62, 62);
+            logo.scaleToFit(58, 58);
+            logo.setAlignment(Image.ALIGN_CENTER);
             logoCell.addElement(logo);
         } else {
             Paragraph semLogo = new Paragraph("LOGO", PdfUtils.FONT_SMALL);
@@ -115,30 +115,6 @@ public class ReportPageEvent extends PdfPageEventHelper {
         ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, footerLeft, document.leftMargin(), 29, 0);
         ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, footerCenter, page.getWidth() / 2, 18, 0);
         ColumnText.showTextAligned(cb, Element.ALIGN_RIGHT, footerRight, page.getWidth() - document.rightMargin(), 29, 0);
-    }
-
-    private void desenharMarcaDagua(PdfWriter writer, Rectangle page, PrefeituraConfig cfg) {
-        try {
-            Image logo = carregarLogo(cfg);
-            if (logo == null) return;
-
-            PdfContentByte under = writer.getDirectContentUnder();
-            PdfGState gs = new PdfGState();
-            gs.setFillOpacity(0.055f);
-            gs.setStrokeOpacity(0.055f);
-
-            float tamanho = 360f;
-            logo.scaleToFit(tamanho, tamanho);
-            float x = (page.getWidth() - logo.getScaledWidth()) / 2;
-            float y = (page.getHeight() - logo.getScaledHeight()) / 2;
-            logo.setAbsolutePosition(x, y);
-
-            under.saveState();
-            under.setGState(gs);
-            under.addImage(logo);
-            under.restoreState();
-        } catch (Exception ignored) {
-        }
     }
 
     private Image carregarLogo(PrefeituraConfig cfg) {

@@ -12,15 +12,24 @@ public class Manutencao extends Registro {
     private String descricao;
     private double revisaoAtual;
     private double proximaRevisao;
+    private double valor;
     private LocalDate data;
 
-    public Manutencao() {}
+    public Manutencao() {
+    }
 
-    public Manutencao(Equipamento equipamento, String descricao, double revisaoAtual, double proximaRevisao, LocalDate data) {
+    public Manutencao(Equipamento equipamento, String descricao, double revisaoAtual,
+                      double proximaRevisao, LocalDate data) {
+        this(equipamento, descricao, revisaoAtual, proximaRevisao, 0d, data);
+    }
+
+    public Manutencao(Equipamento equipamento, String descricao, double revisaoAtual,
+                      double proximaRevisao, double valor, LocalDate data) {
         this.equipamento = equipamento;
         this.descricao = descricao;
         this.revisaoAtual = revisaoAtual;
         this.proximaRevisao = proximaRevisao;
+        this.valor = valor;
         this.data = data;
     }
 
@@ -54,6 +63,14 @@ public class Manutencao extends Registro {
 
     public void setProximaRevisao(double proximaRevisao) {
         this.proximaRevisao = proximaRevisao;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
     public LocalDate getData() {

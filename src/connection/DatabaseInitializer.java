@@ -64,6 +64,7 @@ public final class DatabaseInitializer {
                 descricao TEXT,
                 revisaoAtual REAL DEFAULT 0,
                 proximaRevisao REAL DEFAULT 0,
+                valor REAL DEFAULT 0,
                 data TEXT,
                 FOREIGN KEY (equipamento_id) REFERENCES equipamento(id)
             );
@@ -161,8 +162,8 @@ public final class DatabaseInitializer {
                 + "atualizado_em TEXT NOT NULL)");
 
         executar(stmt, "INSERT OR IGNORE INTO schema_version(id, versao, atualizado_em) "
-                + "VALUES (1, 5, datetime('now'))");
-        executar(stmt, "UPDATE schema_version SET versao=5, atualizado_em=datetime('now') WHERE id=1 AND versao < 5");
+                + "VALUES (1, 6, datetime('now'))");
+        executar(stmt, "UPDATE schema_version SET versao=6, atualizado_em=datetime('now') WHERE id=1 AND versao < 6");
 
         executar(stmt, "CREATE TABLE IF NOT EXISTS usuario ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -205,6 +206,8 @@ public final class DatabaseInitializer {
         adicionarColuna(stmt, "equipamento", "ativo", "INTEGER DEFAULT 1");
 
         adicionarColuna(stmt, "combustivel", "estoqueMinimo", "REAL DEFAULT 0");
+
+        adicionarColuna(stmt, "manutencao", "valor", "REAL DEFAULT 0");
 
         adicionarColuna(stmt, "empenho", "descricao", "TEXT");
         adicionarColuna(stmt, "empenho", "categoria", "TEXT");
